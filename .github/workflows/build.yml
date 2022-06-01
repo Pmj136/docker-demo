@@ -46,5 +46,6 @@ jobs:
             docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
             docker stop dockerdemo
             docker rm dockerdemo
+            docker network prune
             docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/dockerdemo
             docker run -dp 5000:80 ${{ secrets.DOCKER_HUB_USERNAME }}/dockerdemo
