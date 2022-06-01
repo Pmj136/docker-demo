@@ -43,7 +43,6 @@ jobs:
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.REMOTE_ACCESS_TOKEN }}
           script: |
-            docker image rm -f ${{ secrets.DOCKER_HUB_USERNAME }}/dockerdemo
             docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
             docker stop dockerdemo
             docker rm dockerdemo
