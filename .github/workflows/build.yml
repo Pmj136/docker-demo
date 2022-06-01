@@ -44,8 +44,7 @@ jobs:
           key: ${{ secrets.REMOTE_ACCESS_TOKEN }}
           script: |
             docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-            docker stop dockerdemo
-            docker rm dockerdemo
+            docker stop $(docker ps -a -1)
+            docker rm $(docker ps -a -1)
             docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/dockerdemo
-            docker network disconnect multi-host-network dockerdemo
             docker run -dp 5000:80 ${{ secrets.DOCKER_HUB_USERNAME }}/dockerdemo
