@@ -32,6 +32,19 @@ jobs:
           file: ./Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/vitedemo:latest
-          cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/vitedemo:buildcache
-          cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/vitedemo:buildcache,mode=max
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/dockerdemo:latest
+          cache-from: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/dockerdemo:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_HUB_USERNAME }}/dockerdemo:buildcache,mode=max
+
+      - name: upload server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.REMOTE_ACCESS_TOKEN }}
+          script: |
+            docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+            docker pull ${{ env.DOCKER_HUB_USERNAME }}/dockerdemo:latest
+            docker stop dockerdemo
+            docker rmdockerdemo
+            docker run -dp 5000:80 dockerdemo
