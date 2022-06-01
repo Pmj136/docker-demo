@@ -44,7 +44,7 @@ jobs:
           key: ${{ secrets.REMOTE_ACCESS_TOKEN }}
           script: |
             docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-            docker pull ${{ env.DOCKER_HUB_USERNAME }}/dockerdemo:latest
+            docker pull pengmingjiu/dockerdemo:latest
             docker stop dockerdemo
             docker rmdockerdemo
             docker run -dp 5000:80 dockerdemo
