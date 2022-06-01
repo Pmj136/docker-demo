@@ -44,8 +44,8 @@ jobs:
           key: ${{ secrets.REMOTE_ACCESS_TOKEN }}
           script: |
             docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-            docker stop dockerdemo
-            docker rm dockerdemo
+            docker stop ${{ secrets.DOCKER_HUB_USERNAME }}/dockerdemo
+            docker rm ${{ secrets.DOCKER_HUB_USERNAME }}/dockerdemo
             docker network prune
             docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/dockerdemo
             docker run -dp 5000:80 ${{ secrets.DOCKER_HUB_USERNAME }}/dockerdemo
