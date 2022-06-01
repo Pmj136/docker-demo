@@ -43,8 +43,9 @@ jobs:
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.REMOTE_ACCESS_TOKEN }}
           script: |
+            docker image rm -f ${{ secrets.DOCKER_HUB_USERNAME }}/dockerdemo
             docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-            docker stop $(docker ps -a -1)
-            docker rm $(docker ps -a -1)
+            docker stop dockerdemo
+            docker rm dockerdemo
             docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/dockerdemo
-            docker run -dp 5000:80 ${{ secrets.DOCKER_HUB_USERNAME }}/dockerdemo
+            docker run -d --name dockerdemo -p 5000:80 ${{ secrets.DOCKER_HUB_USERNAME }}/dockerdemo
